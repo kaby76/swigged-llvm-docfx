@@ -1,0 +1,2 @@
+C:\Users\Ken\foobar\swigged-llvm\swigged-llvm\swigged.llvm\x64\Release\swigged.llvm.dll
+C:\Users\Ken\foobar\swigged-llvm\swigged-llvm\swigged.llvm\x64\Release\swigged.llvm.pdb
