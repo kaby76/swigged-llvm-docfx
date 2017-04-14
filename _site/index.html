@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>This is the HOMEPAGE. </title>
+    <title>Swigged.LLVM API </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="This is the HOMEPAGE. ">
+    <meta name="title" content="Swigged.LLVM API ">
     <meta name="generator" content="docfx 2.15.5.0">
     
     <link rel="shortcut icon" href="favicon.ico">
@@ -59,13 +59,51 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="this-is-the-homepage">This is the <strong>HOMEPAGE</strong>.</h1>
+              <h1 id="swiggedllvm-api"><strong>Swigged.LLVM API</strong></h1>
               
-<p>Refer to <a href="http://daringfireball.net/projects/markdown/">Markdown</a> for how to write markdown files.</p>
-<h2 id="quick-start-notes">Quick Start Notes:</h2>
-<ol>
-<li>Add images to the <em>images</em> folder if the file is referencing an image.</li>
-</ol>
+<p>This project is a <a href="http://swig.org">SWIG</a>-generated C# wrapper API for LLVM-C. This code
+based upon <a href="https://github.com/xen2/SharpLang">SharpLang</a>, which is defunct. The purpose of that project
+was to compile MS IL, and was abandoned when Microsoft open sourced much of the .NET runtime, including
+RyuJIT. But, SharpLang contained a SWIG-generated C# wrappar for LLVM-C, useful in it&#39;s own right.
+Swigged-LLVM takes up the C# API for LLVM, drops the MS IL reader, and extends the API to contain
+additional LLVM-C functionality. In addition, Swigged.llvm cleans up some of the problems that were never
+fixed in SharpLang, and adds numerous unit tests (whereas SharpLang had only one test, calling only
+LLVM.ModuleCreateWithName(&quot;Module Name&quot;), i.e., <a href="https://github.com/xen2/SharpLang/blob/coreclr/src/SharpLLVM.Tests/TestLLVM.cs">https://github.com/xen2/SharpLang/blob/coreclr/src/SharpLLVM.Tests/TestLLVM.cs</a>).</p>
+<h2 id="build-instructions">Build Instructions:</h2>
+<p>Swigged.llvm requires a build of LLVM, described below.</p>
+<p>1) git clone <a href="https://github.com/kaby76/swigged-llvm.git">https://github.com/kaby76/swigged-llvm.git</a>
+2) cd swigged-llvm
+3) git clone -b release_40 <a href="https://github.com/llvm-mirror/llvm.git">https://github.com/llvm-mirror/llvm.git</a>
+4) mkdir build-win64 build-win32
+5) cd build-win64
+6) &quot;%VS150BASE%\VC\Auxiliary\Build\vcvarsall.bat&quot; x64
+7) cmake -G &quot;Visual Studio 15 2017 Win64&quot; ..\llvm
+8) msbuild LLVM.sln /p:Configuration=Debug /p:Platform=x64
+9) cd ..
+10) cd build-win32
+11) &quot;%VS150BASE%\VC\Auxiliary\Build\vcvarsall.bat&quot; x86
+12) cmake -G &quot;Visual Studio 15 2017&quot; ..\llvm
+13) msbuild LLVM.sln /p:Configuration=Debug /p:Platform=Win32
+14) cd ../swigged-llvm
+15) msbuild swigged-llvm.sln /p:Configuration=Debug /p:Platform=x86</p>
+<h2 id="testing">Testing</h2>
+<p>Make sure to set the Default Processor Architecture to x86 or x64, then
+recompile in Visual Studio 2017. If you don&#39;t set the DPA, then
+no tests will be discovered, and so cannot be run.</p>
+<p>Test&gt;Test Settings&gt;Default Processor Architecture&gt;X64</p>
+<h2 id="debugging">Debugging</h2>
+<p>Make sure to enable unmanaged debugging (<enableunmanageddebugging>true</enableunmanageddebugging>),
+and unsafe code (<allowunsafeblocks>true</allowunsafeblocks>).</p>
+<h2 id="doxygen-documentation-of-llvm-c">Doxygen Documentation of LLVM-C:</h2>
+<p><a href="http://llvm.org/docs/doxygen/html/modules.html">http://llvm.org/docs/doxygen/html/modules.html</a></p>
+<h2 id="the-api">The API</h2>
+<p>Swigged.llvm wraps all LLVM-C functions in the namespace Swigged.LLVM.</p>
+<h2 id="alternative-llvm-framework-for-c">Alternative LLVM Framework for C#</h2>
+<p>LLVMSharp (<a href="https://www.nuget.org/packages/LLVMSharp/3.9.1-rc3">https://www.nuget.org/packages/LLVMSharp/3.9.1-rc3</a>)</p>
+<p>Note: LLVMSharp is a NET Core API. It appears it cannot be used with NET Framework applications,
+at least I have had no luck in doing so. In theory, NET Framework assemblies can be used in
+NET Core applications but not the other way around. However, although swigged.llvm 
+is a NET Framework API, it does not seem to work with NET Core apps.</p>
 
             </article>
           </div>
@@ -74,6 +112,9 @@
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/kaby76/swigged-llvm-docfx/blob/master/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
